@@ -6,15 +6,6 @@ class CookieKey {
         $this->cookieKey = "cookie:$cookieName:$cookieHost";
     }
 
-    private function isValidName($cookieName) {
-
-    }
-
-    private function isValidHost($cookieName) {
-
-    }
-
-
     public function getCookieKey() {
         return $this->cookieKey;
     }

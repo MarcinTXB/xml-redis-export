@@ -1,37 +1,21 @@
 <?php
 
-require_once 'src/SubdomainRow.php';
-require_once 'src/Subdomains.php';
-require_once 'src/CookieKey.php';
-require_once 'src/KeyValuePair.php';
-require_once 'src/KeyValuePairCollection.php';
-
+spl_autoload_register(function($className) {
+    require_once "src/$className.php";
+});
 
 
 if ($argc == 2) {    
-    $path_to_xml_file = $argv[1];
-    $print_keys = false;
+    $pathToXMLFile = $argv[1];
+    $printKeys = false;
 }
 elseif ($argc == 3) {
-    $path_to_xml_file = $argv[2];
-    $print_keys = true;
-    $keys_to_print = [];
+    $pathToXMLFile = $argv[2];
+    $printKeys = true;
 }
 
 
-
-//try {
-    $xml = simplexml_load_file($path_to_xml_file);
-    //$xml = new SimpleXMLElement($argv[1], LIBXML_NOERROR);
-/*}
-catch (Exception $e) {
-   echo 'Exception message: ' . $e->getMessage();   
-}*/
-/*if ($xml === false) {
-    foreach(libxml_get_errors() as $error) {
-        echo "\t", $error->message;
-    }
-}*/
+$xml = simplexml_load_file($pathToXMLFile);
 
 $subdomainsFromXML = $xml->subdomains;
 $cookiesFromXML = $xml->cookies;
@@ -63,7 +47,7 @@ foreach ($cookiesFromXML->children() as $cookie) {
 
 
 
-if ($print_keys) {
+if ($printKeys) {
 
     foreach ($keyValuePairCollection->getKeyValuePairCollection() as $keyValuePair) {
         echo $keyValuePair->getKey() . "\n";
@@ -78,14 +62,6 @@ $redis->connect('localhost', 6379);
 foreach ($keyValuePairCollection->getKeyValuePairCollection() as $keyValuePair) {
     $redis->set($keyValuePair->getKey(), $keyValuePair->getValue());
 }
-
-
-
-
-
-
-
-
 
 
 
