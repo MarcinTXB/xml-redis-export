@@ -1,6 +1,5 @@
 
-    Tematy zadania
-    
+       
     - From attached XML file, please export data to Redis,                                                           ZROBIŁEM
       
 	
